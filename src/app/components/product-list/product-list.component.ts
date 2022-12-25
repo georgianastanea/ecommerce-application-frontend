@@ -1,6 +1,9 @@
+import { keyframes } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
+import { CartService } from 'src/app/services/cart.service';
 import { ProductService } from 'src/app/services/product.service';
 
 @Component({
@@ -12,9 +15,18 @@ export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   currentCategoryId: number = 1;
+  previousCategoryId: number =1;
   searchMode: boolean = false;
 
+  thePageNumber: number = 1;
+  thePageSize: number = 5;
+  thetotalElements: number = 0;
+
+  previousKeywrd: string = "";
+
+
   constructor(private productServie:ProductService,
+              private cartService: CartService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -38,11 +50,16 @@ export class ProductListComponent implements OnInit {
   handleSearchProducts() {
     const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
 
-    this.productServie.searchProducts(theKeyword).subscribe(
-      data => {
-        this.products = data;
-      }
-    );
+    if(this.previousKeywrd != theKeyword){
+      this.thePageNumber = 1;
+    }
+
+    this.previousKeywrd = theKeyword;
+
+
+    this.productServie.searchProductsPaginate(this.thePageNumber -1,
+                                  this.thePageSize,
+                                  theKeyword).subscribe(this.processResult());
   }
 
 
@@ -56,12 +73,39 @@ export class ProductListComponent implements OnInit {
       this.currentCategoryId = 1;
     }
 
-    this.productServie.getProductList(this.currentCategoryId).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    if(this.previousCategoryId != this.currentCategoryId){
+      this.thePageNumber = 1;
+    }
+
+    this.previousCategoryId = this.currentCategoryId;
+
+    this.productServie.getProductListPaginate(this.thePageNumber -1,
+                                              this.thePageSize,
+                                              this.currentCategoryId)
+                                              .subscribe(this.processResult());
 
   }
+
+  updatePageSize(pageSize: string){
+    this.thePageSize =+ pageSize;
+    this.thePageNumber = 1;
+    this.listProducts();
+  }
+
+  processResult(){
+    return(data:any) =>{
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.thetotalElements = data.page.totalElements;
+    };
+  }
+
+  addToCart(theProduct:Product){
+    const theCartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(theCartItem);
+  }
+  
 
 }
