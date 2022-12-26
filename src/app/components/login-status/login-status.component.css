@@ -1,14 +1,16 @@
-.securiry-btn{
+
+.security-btn {
     position:relative;
-    right:10px;
-    min-width:85px;
+    right:0;
+    min-width:95px;
     color:#fff;
     border:10px solid #205b8d;
     -webkit-border-radius:3px;
     -moz-border-radius:3px;
-    border-radius:0;
+    border-radius:43px;
     background:#205b8d
 }
+
 
 .login-status-header{
     display:-webkit-box;
@@ -18,7 +20,8 @@
     display:flex
 }
 
-.login-status-user-info{
+
+.login-status-user-info {
     line-height:43px;
     border:1px;
     padding:0 17px;

@@ -17,16 +17,19 @@ export class LoginStatusComponent implements OnInit {
 
   ngOnInit(): void {
 
+    
     this.oktaAuthService.authState$.subscribe(
       (result) => {
         this.isAuthenticated = result.isAuthenticated!;
         this.getUserDetails();
       }
-    )
-
+    );
   }
+  
   getUserDetails() {
-    if(this.isAuthenticated){
+    if (this.isAuthenticated) {
+
+      
       this.oktaAuth.getUser().then(
         (res) => {
           this.userFullName = res.name as string;
@@ -35,7 +38,9 @@ export class LoginStatusComponent implements OnInit {
     }
   }
 
-  logout(){
+  logout() {
+    
     this.oktaAuth.signOut();
   }
+
 }
