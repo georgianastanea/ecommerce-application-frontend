@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  ecommerceApiUrl: "http://localhost:8080/api",
+  stripePublishableKey: "pk_test_51MJbEPIATPP9lRNMJszjHZUJbr3eDWqeNE5rYNSdFGVgbdyEwHkNNUHKyPjm4QfBYYy6CimaBNRj1QAV40x91udN00C3VXxA3c"
 };
 
 /*
