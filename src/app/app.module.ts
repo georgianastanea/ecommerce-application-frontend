@@ -45,7 +45,9 @@ const routes: Routes = [
 
   {path: 'order-history', component: OrderHistoryComponent, canActivate: [OktaAuthGuard],
                     data: {onAuthRequired: sendToLoginPage}},
-
+                    
+                  
+  {path: 'checkout/recommendations', component: ProductListComponent},
   {path: 'login/callback', component: OktaCallbackComponent},
   {path: 'login', component: LoginComponent},
   

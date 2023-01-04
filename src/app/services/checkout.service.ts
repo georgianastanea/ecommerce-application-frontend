@@ -14,6 +14,8 @@ export class CheckoutService {
 
   private paymentIntentUrl = environment.ecommerceApiUrl + '/checkout/payment-intent';
 
+  private recommendationsUrl = 'http://localhost:8080/api/checkout/purchase/recommendations';
+
   constructor(private httpClient:HttpClient) { }
 
   placeOrder(purchase: Purchase): Observable<any>{
@@ -22,5 +24,9 @@ export class CheckoutService {
 
   createPaymentIntent(paymentInfo: PaymentInfo): Observable<any>{
     return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl, paymentInfo);
+  }
+
+  getRecommendations(purchase: Purchase): Observable<any>{
+    return this.httpClient.post<Purchase>(this.recommendationsUrl,purchase);
   }
 }

@@ -19,7 +19,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CheckoutComponent implements OnInit {
 
-
+  finalPurchase!: Purchase;
   checkoutFormGroup!: FormGroup;
 
   totalPrice: number = 0;
@@ -221,6 +221,9 @@ export class CheckoutComponent implements OnInit {
     purchase.order = order;
     purchase.orderItems = orderItems;
 
+    this.finalPurchase = purchase;
+    console.log("final purchase is " + JSON.stringify(this.finalPurchase));
+
     this.paymentInfo.amount = Math.round(this.totalPrice * 100);
     this.paymentInfo.currency = "USD";
 
@@ -259,6 +262,9 @@ export class CheckoutComponent implements OnInit {
       this.checkoutFormGroup.markAllAsTouched();
       return;
     }
+      
+    console.log(this.checkoutService.getRecommendations(this.finalPurchase));
+  
 
   }
 
