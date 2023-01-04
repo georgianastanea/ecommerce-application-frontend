@@ -786,7 +786,7 @@ footer ul li{
 
 @media (max-width:1600px){
     .au-input-xl{
-        min-width:290px
+        min-width:20px
     }
 }
 @media (max-width:1315px) and (min-width:992px){
