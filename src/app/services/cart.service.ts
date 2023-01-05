@@ -32,7 +32,7 @@ export class CartService {
       
     }
 
-    
+  
     if(alreadyExistsInCart){
       existingCartItem.quantity ++;
     }
@@ -54,11 +54,9 @@ export class CartService {
       totalQuantityValue += currentCartItem.quantity;
     }
 
-    // publish the new values ... all subscribers will receive the new data
     this.totalPrice.next(totalPriceValue);
     this.totalQuantity.next(totalQuantityValue);
 
-    // log cart data just for debugging purposes
     this.logCartData(totalPriceValue, totalQuantityValue);
   }
 

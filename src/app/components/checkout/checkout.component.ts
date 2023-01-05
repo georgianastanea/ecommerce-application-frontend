@@ -73,12 +73,6 @@ export class CheckoutComponent implements OnInit {
         zipCode: ['']
       }),
       creditCard: this.formBuilder.group({
-        // cardType: [''],
-        // nameOnCard: [''],
-        // cardNumber: [''],
-        // securityCode: [''],
-        // expirationMonth: [''],
-        // expirationYear: ['']
       })
     });
 
@@ -239,15 +233,11 @@ export class CheckoutComponent implements OnInit {
             }, { handleActions: false })
           .then((result: any) => {
             if (result.error) {
-              // inform the customer there was an error
               alert(`There was an error: ${result.error.message}`);
             } else {
-              // call REST API via the CheckoutService
               this.checkoutService.placeOrder(purchase).subscribe({
                 next: (response: any) => {
                   alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
-
-                  // reset cart
                   this.resetCart();
                 },
                 error: (err: any) => {
